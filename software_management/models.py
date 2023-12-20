@@ -37,7 +37,7 @@ class SoftwareVersion(NetBoxModel):
 
     class Meta:
         # This is to order the software version by name. by default this is ordered by ID number.
-        ordering = ('name',)
+        ordering = ('name','software_version_type')
 
     def __str__(self):
         return self.name

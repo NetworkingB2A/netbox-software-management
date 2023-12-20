@@ -1,5 +1,5 @@
 from netbox.views import generic
-from . import forms, models, tables
+from . import filtersets,forms, models, tables
 
 class SoftwareVersionView(generic.ObjectView):
     queryset = models.SoftwareVersion.objects.all()
@@ -14,3 +14,9 @@ class SoftwareVersionEditView(generic.ObjectEditView):
 
 class SoftwareVersionDeleteView(generic.ObjectDeleteView):
     queryset = models.SoftwareVersion.objects.all()
+    
+class SoftwareVersionListView(generic.ObjectListView):
+    queryset = models.SoftwareVersion.objects.all()
+    table = tables.SoftwareVersionTable
+    filterset = filtersets.SoftwareVersionFilterSet
+    filterset_form = forms.SoftwareVersionFilterForm
