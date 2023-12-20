@@ -1,7 +1,8 @@
-from netbox.forms import NetBoxModelForm
+from netbox.forms import NetBoxModelForm, NetBoxModelFilterSetForm
+from utilities.forms.fields import CommentField, DynamicModelChoiceField
 from .models import SoftwareVersion
 
-class SoftwareVersionForm(NetBoxModelForm)
+class SoftwareVersionForm(NetBoxModelForm):
     comments = CommentField()
     
     class Meta:

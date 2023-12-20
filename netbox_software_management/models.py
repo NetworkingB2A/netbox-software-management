@@ -2,6 +2,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from netbox.models import NetBoxModel
 from utilities.choices import ChoiceSet
+from django.urls import reverse
 
 # Firmware, linux, Versa, Cisco
 class SoftwareTypeChoices(ChoiceSet):
@@ -46,3 +47,6 @@ class SoftwareVersion(NetBoxModel):
     
     def get_software_version_type_color(self):
         return SoftwareTypeChoices.colors.get(self.software_version_type)
+
+    def get_absolute_url(self):
+        return reverse('plugins:netbox_software_management:softwareversion', args=[self.pk])
