@@ -1,8 +1,6 @@
 from netbox.views import generic
 from . import forms, models, tables
 
-
-
 class SoftwareVersionView(generic.ObjectView):
     queryset = models.SoftwareVersion.objects.all()
     

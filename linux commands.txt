@@ -1,0 +1,32 @@
+manage.py runserver
+
+
+source /opt/netbox/venv/bin/activate
+
+sudo /opt/netbox/venv/bin/python3 setup.py develop
+
+sudo nano /opt/netbox/netbox/netbox/configuration.py
+
+cd /opt/netbox/netbox/
+python3 manage.py migrate
+python3 manage.py collectstatic
+sudo systemctl restart nginx
+cd ~/github/netbox-software-management/
+python pip install 
+python netbox/manage.py makemigrations software_management --dry-run
+python netbox/manage.py makemigrations software_management 
+python netbox/manage.py migrate
+python netbox/manage.py dbshell
+python netbox/manage.py nbshell
+
+pip install .
+
+
+Creating a software version
+python netbox/manage.py nbshell
+>>> from software_management.models import *
+>>> software_version_1 = SoftwareVersion(name='cisco_software_C9K', software_version_type='cisco', software_hash_value='123asd5s8d5d3d843d57g', description='this is a test cisco image')
+>>> software_version_1
+<SoftwareVersion: cisco_software_C9K>
+>>> software_version_1.save()
+

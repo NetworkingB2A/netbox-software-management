@@ -19,25 +19,22 @@ class SoftwareVersion(NetBoxModel):
     name = models.CharField(
     max_length=100
     )
-
     software_version_type = models.CharField(
         max_length=30,
         choices=SoftwareTypeChoices
     )
-
     software_hash_value = models.CharField(
         max_length=125,
         blank=True
     )
-
     description = models.CharField(
         max_length=500,
         blank=True
     )
-
     comments = models.TextField(
         blank=True
     )
+
     class Meta:
         # This is to order the software version by name. by default this is ordered by ID number.
         ordering = ('name',)
@@ -49,4 +46,6 @@ class SoftwareVersion(NetBoxModel):
         return SoftwareTypeChoices.colors.get(self.software_version_type)
 
     def get_absolute_url(self):
-        return reverse('plugins:netbox_software_management:softwareversion', args=[self.pk])
+        return reverse('plugins:software_management:softwareversion', args=[self.pk])
+    
+
