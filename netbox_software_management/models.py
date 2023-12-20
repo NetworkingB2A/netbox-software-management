@@ -5,7 +5,6 @@ from utilities.choices import ChoiceSet
 
 # Firmware, linux, Versa, Cisco
 class SoftwareTypeChoices(ChoiceSet):
-    key = 'SoftwareVersionRule.action'
 
     CHOICES = [
         ('firmware', 'Firmware', 'green'),
@@ -19,42 +18,10 @@ class SoftwareVersion(NetBoxModel):
     name = models.CharField(
     max_length=100
     )
-    default_action = models.CharField(
-        max_length=30
-    )
-    comments = models.TextField(
-        blank=True
-    )
 
-    class Meta:
-        # This is to order the software version by name. by default this is ordered by ID number.
-        ordering = ('name',)
-
-    def __str__(self):
-        return self.name
-    
-
-
-# I will set up a version of there I set the status of a image.
-# Firmware, linux, Versa, Cisco
-# field called hash
-class SoftwareVersionRule(NetBoxModel):
-    software_version = models.ForeignKey(
-        to=SoftwareVersion,
-        on_delete=models.CASCADE,
-        related_name='software'
-    )
-    # This i am not positive will work how i want it to. So I will comment it out for now. I still want to write it because I do want this.
-    # device_type = models.ForeignKey(
-    #     to='dcim.device-types',
-    #     on_delete=models.PROTECT,
-    #     related_name='+',
-    #     blank=True,
-    #     null=True
-    # )
-    description = models.CharField(
-        max_length=500,
-        blank=True
+    software_version_type = models.CharField(
+        max_length=30,
+        choices=SoftwareTypeChoices
     )
 
     software_hash_value = models.CharField(
@@ -62,17 +29,20 @@ class SoftwareVersionRule(NetBoxModel):
         blank=True
     )
 
-    software_version_type = models.CharField(
-        max_length=30,
-        choices=SoftwareTypeChoices
+    description = models.CharField(
+        max_length=500,
+        blank=True
     )
 
+    comments = models.TextField(
+        blank=True
+    )
     class Meta:
-        ordering = ('software_version',)
-        unique_together = ('software_version',)
+        # This is to order the software version by name. by default this is ordered by ID number.
+        ordering = ('name',)
 
     def __str__(self):
-        return f'{self.software_version}'
-
+        return self.name
+    
     def get_software_version_type_color(self):
         return SoftwareTypeChoices.colors.get(self.software_version_type)
